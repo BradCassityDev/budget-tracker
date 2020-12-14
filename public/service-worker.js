@@ -20,7 +20,8 @@ const FILES_TO_CACHE = [
     '/icons/icon-512x512.png'
   ];
 
-  self.addEventListener('install', function (e) {
+// Service Worker - Install Event Listener
+self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
           console.log('installing cache : ' + CACHE_NAME)
@@ -29,6 +30,7 @@ const FILES_TO_CACHE = [
     )
 })
 
+// Service Worker - Activate Event Listener
 self.addEventListener('activate', function(e) {
     e.waitUntil(
       caches.keys().then(function(keyList) {
@@ -47,10 +49,10 @@ self.addEventListener('activate', function(e) {
         );
       })
     );
-  });
+});
 
-
-  self.addEventListener('fetch', function(evt) {
+// Service Worker - Fetch Event Listener
+self.addEventListener('fetch', function(evt) {
     if (evt.request.url.includes('/api/')) {
         evt.respondWith(
           caches
